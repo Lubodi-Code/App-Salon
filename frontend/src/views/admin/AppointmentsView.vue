@@ -23,6 +23,7 @@ const filteredAppointments = computed(() => {
   })
 })
 
+
 onMounted(async () => {
   // Fetch all appointments for admin
   await userStore.getUserAppointments(userStore.user._id)
