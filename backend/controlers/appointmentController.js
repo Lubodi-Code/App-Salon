@@ -77,7 +77,7 @@ const getAppointmentsById = async (req, res) => {
     }
 
     // Validar que el usuario que solicita sea el dueño de la cita
-    if (appointment.user.toString() !== req.user._id.toString()) {
+    if (!req.user.admin && appointment.user.toString() !== req.user._id.toString()) {
       return res.status(403).json({ msg: 'No tienes permiso para ver esta cita' });
     }
 
@@ -99,7 +99,7 @@ const getAppointmentsById = async (req, res) => {
       return res.status(404).json({ msg: 'Cita no encontrada' });
     }
     // Validar que el usuario que solicita sea el dueño de la cita
-    if (appointment.user.toString() !== req.user._id.toString()) {
+    if (!req.user.admin && appointment.user.toString() !== req.user._id.toString()) {
       return res.status(403).json({ msg: 'No tienes permiso para actualizar esta cita' });
     }
     // Verificación previa: buscar si ya existe una cita para la misma fecha y hora
@@ -138,7 +138,7 @@ const getAppointmentsById = async (req, res) => {
       return res.status(404).json({ msg: 'Cita no encontrada' });
     }
     // Validar que el usuario que solicita sea el dueño de la cita
-    if (appointment.user.toString() !== req.user._id.toString()) {
+    if (!req.user.admin && appointment.user.toString() !== req.user._id.toString()) {
       return res.status(403).json({ msg: 'No tienes permiso para eliminar esta cita' });
     }
 
