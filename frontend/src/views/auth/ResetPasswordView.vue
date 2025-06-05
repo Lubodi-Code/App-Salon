@@ -41,12 +41,10 @@ async function onSubmit(values) {
   }
 
   try {
-    const data = await userStore.resetPassword({ 
-      token, 
-      password: values.password 
+    const data = await userStore.resetPassword({
+      token,
+      password: values.password
     })
-    
-    console.log('Respuesta del servidor:', data); // Debug log
 
     if (data && data.msg) {
       toast.open({
@@ -62,7 +60,6 @@ async function onSubmit(values) {
       }, 2000)
     }
   } catch (error) {
-    console.error('Error en onSubmit:', error);
     toast.open({
       message: error.response?.data?.msg || 'Error al procesar la solicitud',
       type: 'error'

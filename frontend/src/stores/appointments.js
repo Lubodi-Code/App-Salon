@@ -60,7 +60,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         message: 'Error al cargar la cita',
         type: 'error'
       });
-      console.error('Error loading appointment:', error);
     }
   };
 
@@ -99,11 +98,10 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         ? 'Error al actualizar la cita'
         : 'Error al crear la cita';
         
-      toast.open({ 
-        message: errorMessage, 
-        type: 'error' 
+      toast.open({
+        message: errorMessage,
+        type: 'error'
       });
-      console.error('Error handling appointment:', error);
     }
   };
 
@@ -159,7 +157,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
       const availableHours = filterAvailableHours(hours, dateObj, now, reserved);
       state.availableHours.value = availableHours;
     } catch (error) {
-      console.error('Error fetching available hours:', error);
       state.availableHours.value = [];
     }
   };
@@ -213,7 +210,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         message: 'Error al cancelar la cita', 
         type: 'error' 
       });
-      console.error('Error canceling appointment:', error);
     }
   };
 
@@ -222,7 +218,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
       const { data } = await AppointmentAPI.search(params);
       return data;
     } catch (error) {
-      console.error('Error searching appointments:', error);
       throw error;
     }
   };

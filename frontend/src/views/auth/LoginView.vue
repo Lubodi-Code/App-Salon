@@ -40,7 +40,6 @@ async function onSubmit(values) {
       message: error.response?.data?.msg || 'Error en el inicio de sesión',
       type: 'error',
     })
-    console.log(error)
   }
 }
 </script>

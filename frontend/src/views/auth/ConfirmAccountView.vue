@@ -5,9 +5,7 @@ import AuthApi from '@/api/AuthApi';
 const route = useRoute()
 const router = useRouter()
 const toast = inject('toast')
-const { token} = route.params
-
-console.log('token', token)
+const { token } = route.params
 
 onMounted(async () => {
    try {
