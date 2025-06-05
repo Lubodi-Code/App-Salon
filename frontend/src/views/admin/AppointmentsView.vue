@@ -5,22 +5,22 @@ import { onMounted, ref, computed, watch } from 'vue'
 
 const userStore = useUserStore()
 const search = ref('')
+const isLoading = ref(true)
 
 async function loadAppointments() {
-    isLoading.value = true
-    try {
-        if (userStore.user?._id) {
-            await userStore.getUserAppointments()
-        }
-    } catch (error) {
-        console.error('Error cargando citas:', error)
-    } finally {
-        isLoading.value = false
+  isLoading.value = true
+  try {
+    if (userStore.user?._id) {
+      await userStore.getUserAppointments()
     }
+  } catch (error) {
+  } finally {
+    isLoading.value = false
+  }
 }
 
 onMounted(async () => {
-    await loadAppointments()
+  await loadAppointments()
 })
 
 const filteredAppointments = computed(() => {
@@ -41,11 +41,15 @@ const filteredAppointments = computed(() => {
 })
 
 // Observar cambios en el usuario
-watch(() => userStore.user, (newUser) => {
-  if (newUser?._id) {
-    userStore.getUserAppointments()
-  }
-}, { immediate: true })
+watch(
+  () => userStore.user,
+  async (newUser) => {
+    if (newUser?._id) {
+      await loadAppointments()
+    }
+  },
+  { immediate: true }
+)
 
 
 
@@ -54,7 +58,7 @@ watch(() => userStore.user, (newUser) => {
 
 <template>
   <div class="space-y-8">
-    <div class="flex justify-between items-center gap-4">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
       <p class="text-white">Total de citas: {{ userStore.userAppointments.length }}</p>
       <input
         v-model="search"
@@ -64,9 +68,9 @@ watch(() => userStore.user, (newUser) => {
       />
     </div>
 
-    <div class="bg-gray-800 rounded-lg p-6">
-      <p v-if="userStore.loading" class="text-white text-center">Cargando citas...</p>
-      <div v-else>
+      <div class="bg-gray-800 rounded-lg p-4 sm:p-6 overflow-x-auto">
+        <p v-if="isLoading" class="text-white text-center">Cargando citas...</p>
+        <div v-else>
         <p v-if="userStore.noAppointments" class="text-white text-center text-lg">
           No hay citas programadas en el sistema.
         </p>
