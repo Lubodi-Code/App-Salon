@@ -23,7 +23,7 @@
 
            <RouterLink
           v-if="userStore.isAdmin"
-          :to="{ name: 'admin' }"
+          :to="{ name: 'appointments-admin' }"
           class="px-2 py-1 sm:px-4 sm:py-2 bg-indigo-600 hover:bg-indigo-700 rounded transition-colors text-sm sm:text-base"
         >
           Panel Admin
