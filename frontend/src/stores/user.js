@@ -17,7 +17,6 @@ export const useUserStore = defineStore('user', () => {
         user.value = data;
         await getUserAppointments();
        }catch (error) {
-        console.error("Error fetching user data:", error);
        }finally {
         loading.value = false;
        }
@@ -32,7 +31,6 @@ export const useUserStore = defineStore('user', () => {
                    const { data } = await AppointmentAPI.getUserAppointments(user.value._id);
             userAppointments.value = data;
         } catch (error) {
-            console.error("Error fetching user appointments:", error);
         }
     }
 
@@ -44,7 +42,6 @@ export const useUserStore = defineStore('user', () => {
        localStorage.removeItem('AUTH_TOKEN');
        user .value = {};
        router.push({name: 'login'});
-       console.log('Logout successful');
        
     }
 
@@ -55,11 +52,9 @@ export const useUserStore = defineStore('user', () => {
 
 async function verifyPasswordResetToken(token) {
     try {
-        console.log('Verificando token:', token);
         const { data } = await AuthApi.verifyToken(token.trim());
         return data;
     } catch (error) {
-        console.error('Error en store:', error);
         throw new Error(error.response?.data?.msg || 'Token no válido');
     }
 }

@@ -24,7 +24,6 @@ const loadAppointmentData = async () => {
     }
     loading.value = false;
   } catch (error) {
-    console.error('Error al cargar la cita:', error);
     router.push({ name: 'mis-reservaciones' });
   }
 };
