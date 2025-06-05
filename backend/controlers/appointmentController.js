@@ -130,7 +130,7 @@ const getAppointmentsById = async (req, res) => {
   }
 };
 
- const deleteAppointment = async (req, res) => {
+const deleteAppointment = async (req, res) => {
   const { id } = req.params;
   try {
     const appointment = await Appointment.findById(id);
@@ -154,6 +154,46 @@ const getAppointmentsById = async (req, res) => {
   }
 };
 
+// Buscar citas según un término. Permite filtrar por nombre de cliente,
+// correo electrónico, fecha (incluyendo el día de la semana) y hora.
+const searchAppointments = async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    // Obtener todas las citas junto con la información de usuario
+    let appointments = await Appointment.find()
+      .populate('services')
+      .populate('user', 'name email')
+      .sort({ date: 1, time: 1 });
+
+    // Si el usuario no es administrador solo puede buscar sus propias citas
+    if (!req.user.admin) {
+      appointments = appointments.filter(a => a.user._id.toString() === req.user._id.toString());
+    }
+
+    if (q) {
+      const term = q.toLowerCase();
+      appointments = appointments.filter(app => {
+        const dateObj = new Date(app.date);
+        const formattedDate = dateObj.toLocaleDateString('es-ES');
+        const dayName = dateObj.toLocaleDateString('es-ES', { weekday: 'long' });
+        return (
+          app.user.name.toLowerCase().includes(term) ||
+          app.user.email.toLowerCase().includes(term) ||
+          app.time.includes(term) ||
+          formattedDate.includes(term) ||
+          dayName.toLowerCase().includes(term)
+        );
+      });
+    }
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error('Error searching appointments:', error);
+    res.status(500).json({ msg: 'Error searching appointments' });
+  }
+};
+
 // Exporta las funciones que necesites
 export {
   createAppointment,
@@ -161,5 +201,6 @@ export {
   getAppointmentsByDate,
   getAppointmentsById,
   updateAppointment,
-  deleteAppointment
+  deleteAppointment,
+  searchAppointments
 };

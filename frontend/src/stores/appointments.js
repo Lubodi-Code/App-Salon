@@ -217,6 +217,16 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     }
   };
 
+  const searchAppointments = async (params) => {
+    try {
+      const { data } = await AppointmentAPI.search(params);
+      return data;
+    } catch (error) {
+      console.error('Error searching appointments:', error);
+      throw error;
+    }
+  };
+
   return {
     ...state,
     totalAmount,
@@ -228,7 +238,8 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     handleAppointmentSubmit,
     clearAppointment,
     loadAppointment,
-    cancelAppointment
+    cancelAppointment,
+    searchAppointments
   };
 });
 
