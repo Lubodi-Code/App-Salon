@@ -26,7 +26,14 @@ async function onSubmit(values) {
       router.push({ name: 'mis-reservaciones' })
    
 
+    const { data: user } = await AuthApi.auth()
     
+    if (user.admin) {
+      router.push({ name: 'admin' })
+    } else {
+      router.push({ name: 'mis-reservaciones' })
+    }
+
   
   } catch (error) {
     toast.open({

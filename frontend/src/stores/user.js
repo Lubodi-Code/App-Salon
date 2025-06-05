@@ -23,9 +23,13 @@ export const useUserStore = defineStore('user', () => {
        }
     });
 
+      const isAdmin = computed(() => {
+        return user.value.admin || false;
+    });
+
     async function getUserAppointments() {
         try {
-            const { data } = await AppointmentAPI.getUserAppointments(user.value._id);
+                   const { data } = await AppointmentAPI.getUserAppointments(user.value._id);
             userAppointments.value = data;
         } catch (error) {
             console.error("Error fetching user appointments:", error);
@@ -89,7 +93,8 @@ async function forgotPassword(email) {
         noAppointments,
         verifyPasswordResetToken,
         resetPassword,
-        forgotPassword
+        forgotPassword,
+        isAdmin
   
     };
 

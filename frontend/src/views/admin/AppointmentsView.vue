@@ -1,10 +1,27 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 import Appointment from '@/components/Appointment.vue'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 
 const userStore = useUserStore()
 const search = ref('')
+
+async function loadAppointments() {
+    isLoading.value = true
+    try {
+        if (userStore.user?._id) {
+            await userStore.getUserAppointments()
+        }
+    } catch (error) {
+        console.error('Error cargando citas:', error)
+    } finally {
+        isLoading.value = false
+    }
+}
+
+onMounted(async () => {
+    await loadAppointments()
+})
 
 const filteredAppointments = computed(() => {
   if (!search.value) return userStore.userAppointments
@@ -23,11 +40,16 @@ const filteredAppointments = computed(() => {
   })
 })
 
+// Observar cambios en el usuario
+watch(() => userStore.user, (newUser) => {
+  if (newUser?._id) {
+    userStore.getUserAppointments()
+  }
+}, { immediate: true })
 
-onMounted(async () => {
-  // Fetch all appointments for admin
-  await userStore.getUserAppointments(userStore.user._id)
-})
+
+
+
 </script>
 
 <template>
