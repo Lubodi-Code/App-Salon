@@ -6,12 +6,10 @@ export const useServicesStore = defineStore('services', () => {
     const services = ref([])
     onMounted( async() => {
         try {
-            console.log("Fetching services...")
             const { data } = await ServiceAPI.all()
             services.value = data
         }
         catch (error) {
-            console.error("Error fetching services:", error)
         }
     })
 

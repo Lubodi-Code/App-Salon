@@ -22,7 +22,6 @@ const initialValues = {
 async function onSubmit({ password_confirmation, ...values }) {
   try {
     const { data } = await AuthApi.register(values)
-    console.log(data)
     // Asegúrate de usar la propiedad correcta: data.msg o un fallback
     toast.open({
       message: data.msg || 'Registro completado',
