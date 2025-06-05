@@ -7,13 +7,22 @@ const userStore = useUserStore()
 const search = ref('')
 
 const filteredAppointments = computed(() => {
-  if(!search.value) return userStore.userAppointments
-  return userStore.userAppointments.filter(a =>
-    a.user.name.toLowerCase().includes(search.value.toLowerCase()) ||
-    a.user.email.toLowerCase().includes(search.value.toLowerCase()) ||
-    new Date(a.date).toLocaleDateString().includes(search.value)
-  )
+  if (!search.value) return userStore.userAppointments
+  const term = search.value.toLowerCase()
+  return userStore.userAppointments.filter(a => {
+    const dateObj = new Date(a.date)
+    const dateStr = dateObj.toLocaleDateString()
+    const dayStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long' })
+    return (
+      a.user.name.toLowerCase().includes(term) ||
+      a.user.email.toLowerCase().includes(term) ||
+      dateStr.includes(term) ||
+      dayStr.toLowerCase().includes(term) ||
+      a.time.includes(term)
+    )
+  })
 })
+
 
 onMounted(async () => {
   // Fetch all appointments for admin
