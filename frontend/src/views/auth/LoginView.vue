@@ -29,7 +29,7 @@ async function onSubmit(values) {
     const { data: user } = await AuthApi.auth()
     
     if (user.admin) {
-      router.push({ name: 'admin' })
+      router.push({ name: 'appointments-admin' })
     } else {
       router.push({ name: 'mis-reservaciones' })
     }
