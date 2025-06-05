@@ -14,7 +14,6 @@ async function loadAppointments() {
       await userStore.getUserAppointments()
     }
   } catch (error) {
-    console.error('Error cargando citas:', error)
   } finally {
     isLoading.value = false
   }
@@ -59,7 +58,7 @@ watch(
 
 <template>
   <div class="space-y-8">
-    <div class="flex justify-between items-center gap-4">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
       <p class="text-white">Total de citas: {{ userStore.userAppointments.length }}</p>
       <input
         v-model="search"
@@ -69,7 +68,7 @@ watch(
       />
     </div>
 
-      <div class="bg-gray-800 rounded-lg p-6">
+      <div class="bg-gray-800 rounded-lg p-4 sm:p-6 overflow-x-auto">
         <p v-if="isLoading" class="text-white text-center">Cargando citas...</p>
         <div v-else>
         <p v-if="userStore.noAppointments" class="text-white text-center text-lg">

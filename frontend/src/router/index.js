@@ -1,12 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import AuthApi from '../api/AuthApi.js'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
+    redirect: { name: 'mis-reservaciones' },
   },
   {
     path: '/reservaciones',
@@ -119,8 +117,7 @@ router.beforeEach(async (to, from, next) => {
       
       // Check if route requires admin
       if (requiresAdmin && !user.admin) {
-      
-        return next({ name: 'home' })
+        return next({ name: 'mis-reservaciones' })
       }
 
       // If user is admin and tries to access non-admin pages (except for
