@@ -1,9 +1,27 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 import Appointment from '@/components/Appointment.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 
 const userStore = useUserStore()
+const search = ref('')
+
+const filteredAppointments = computed(() => {
+  if (!search.value) return userStore.userAppointments
+  const term = search.value.toLowerCase()
+  return userStore.userAppointments.filter(a => {
+    const dateObj = new Date(a.date)
+    const dateStr = dateObj.toLocaleDateString()
+    const dayStr = dateObj.toLocaleDateString('es-ES', { weekday: 'long' })
+    return (
+      a.user.name.toLowerCase().includes(term) ||
+      a.user.email.toLowerCase().includes(term) ||
+      dateStr.includes(term) ||
+      dayStr.toLowerCase().includes(term) ||
+      a.time.includes(term)
+    )
+  })
+})
 
 onMounted(async () => {
   // Fetch all appointments for admin
@@ -13,8 +31,14 @@ onMounted(async () => {
 
 <template>
   <div class="space-y-8">
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center gap-4">
       <p class="text-white">Total de citas: {{ userStore.userAppointments.length }}</p>
+      <input
+        v-model="search"
+        type="text"
+        placeholder="Buscar"
+        class="bg-gray-700 text-white px-3 py-1 rounded focus:outline-none"
+      />
     </div>
 
     <div class="bg-gray-800 rounded-lg p-6">
@@ -25,7 +49,7 @@ onMounted(async () => {
         </p>
         
         <div v-else class="space-y-6">
-          <div v-for="appointment in userStore.userAppointments" 
+          <div v-for="appointment in filteredAppointments"
                :key="appointment._id"
                class="bg-gray-900 rounded-lg p-4 mb-4">
             <!-- User info section -->

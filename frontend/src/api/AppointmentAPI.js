@@ -21,5 +21,8 @@ export default {
     },
     delete(id) {
         return api.delete(`appointment/${id}`);
+    },
+    search(params) {
+        return api.get('appointment/search', { params });
     }
 };

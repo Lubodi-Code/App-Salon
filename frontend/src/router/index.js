@@ -123,9 +123,14 @@ router.beforeEach(async (to, from, next) => {
         return next({ name: 'home' })
       }
 
-      // If user is admin and tries to access non-admin pages, redirect to admin
-      if (user.admin && !requiresAdmin && to.name !== 'admin') {
-     
+      // If user is admin and tries to access non-admin pages (except for
+      // reservaciones), redirect to admin
+      if (
+        user.admin &&
+        !requiresAdmin &&
+        to.name !== 'admin' &&
+        !to.path.startsWith('/reservaciones')
+      ) {
         return next({ name: 'admin' })
       }
 
