@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "flowbite";
+
+
+/* Importar el CSS correcto para el datepicker */
+@source "../node_modules/flowbite-datepicker";
+
+@theme {
+  --gradient-brand: linear-gradient(
+    to right,
+    rgb(200 102 241),
+    rgb(79 70 229)
+  );
+  --background-image-app: url('/img/1.jpg'); /* Ruta desde la carpeta public/ */
+}
+
+.bg-app {
+  background-image: var(--background-image-app);
+  
+/* .bg-app { */
+  background-image: var(--background-image-app);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
