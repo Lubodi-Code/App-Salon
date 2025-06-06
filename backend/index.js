@@ -47,6 +47,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 // ...existing code...
+dotenv.config();
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
 app.use('/api/services', serviceRoutes);
 app.use('/api/auth', authRoutes);
