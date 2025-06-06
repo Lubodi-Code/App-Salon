@@ -17,23 +17,36 @@ app.use(express.json());
 db();
 // COnfiguración de CORS
 
+// ...existing code...
+
 const whitelist = [process.env.FRONTEND_URL];
-if(process.argv[2] === '--postman'){
-    whitelist.push(undefined);
+
+// Añadir URLs adicionales solo en desarrollo
+if (process.env.NODE_ENV === 'development') {
+    whitelist.push('http://localhost:5173');
+    whitelist.push('http://localhost:4000');
+    console.log('Modo desarrollo - URLs permitidas:', whitelist);
 }
 
-const constOptions = {
+const corsOptions = {
     origin: function (origin, callback) {
+        // En desarrollo, permitir herramientas de desarrollo
+        if (process.env.NODE_ENV === 'development' && !origin) {
+            return callback(null, true);
+        }
+        
         if (whitelist.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS '));
-            console.log(colors.red.bgRed('No permitido por CORS'));
+            console.log('Origen bloqueado por CORS:', origin);
+            callback(new Error('Not allowed by CORS'));
         }
-    }
-}
-app.use(cors(constOptions))
-   
+    },
+    credentials: true
+};
+
+app.use(cors(corsOptions));
+// ...existing code...
 
 app.use('/api/services', serviceRoutes);
 app.use('/api/auth', authRoutes);
