@@ -4,6 +4,7 @@ import AuthApi from '@/api/AuthApi';
 import AppointmentAPI from '@/api/AppointmentAPI';
 import { useRouter } from 'vue-router';
 import router from '@/router';
+import api from '@/lib/axios'
 
 export const useUserStore = defineStore('user', () => {
 
@@ -40,9 +41,11 @@ export const useUserStore = defineStore('user', () => {
 
     const logout = async () => {
        localStorage.removeItem('AUTH_TOKEN');
-       user .value = {};
+       delete api.defaults.headers.common['Authorization'];
+       user.value = {};
+       userAppointments.value = [];
        router.push({name: 'login'});
-       
+
     }
 
      const noAppointments = computed(() => {
