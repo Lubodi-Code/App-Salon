@@ -30,17 +30,13 @@ if (process.env.NODE_ENV === 'development') {
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // En desarrollo, permitir herramientas de desarrollo
-        if (process.env.NODE_ENV === 'development' && !origin) {
+        // Solo permitir orígenes en la whitelist
+        if (whitelist.includes(origin)) {
             return callback(null, true);
         }
         
-        if (whitelist.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log('Origen bloqueado por CORS:', origin);
-            callback(new Error('Not allowed by CORS'));
-        }
+        console.log('Origen bloqueado por CORS:', origin);
+        callback(new Error('Not allowed by CORS'));
     },
     credentials: true
 };
