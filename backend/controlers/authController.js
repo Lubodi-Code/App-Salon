@@ -86,7 +86,6 @@ const login = async (req, res) => {
 
         const token = utils.genereteJWT(user._id);
         res.json({ msg: 'Inicio de sesión exitoso', token });
-        console.log('Token generado:', token);
 
 
     } catch (error) {
@@ -148,7 +147,6 @@ const admin = async (req, res) => {
         return res.status(401).json({ msg: 'Usuario no encontrado' });
     }
 
-    console.log('Verificando si el usuario es administrador:', user.admin);
     // Verificar si el usuario es administrador
     if (!user.admin) {
         return res.status(403).json({ msg: 'Accion no valida' });
@@ -186,8 +184,6 @@ const updatePassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
 
-    console.log('2. Token recibido:', token);
-    console.log('3. Password recibido (length):', password ? password.length : 'no password');
 
     if (!token || token === 'undefined') {
    
@@ -195,7 +191,6 @@ const updatePassword = async (req, res) => {
     }
 
     if (!password || password.trim() === '') {
-        console.log('5. Error: Contraseña vacía');
         return res.status(400).json({ msg: 'La contraseña es obligatoria' });
     }
 
@@ -209,7 +204,6 @@ const updatePassword = async (req, res) => {
             return res.status(404).json({ msg: 'Token no válido o expirado' });
         }
 
-        console.log('8. Usuario encontrado:', user._id);
 
         // Validar longitud mínima del password
         if (password.trim().length < 6) {

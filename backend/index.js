@@ -25,7 +25,6 @@ const whitelist = [process.env.FRONTEND_URL];
 if (process.env.NODE_ENV === 'development') {
     whitelist.push('http://localhost:5173');
     whitelist.push('http://localhost:4000');
-    console.log('Modo desarrollo - URLs permitidas:', whitelist);
 }
 
 const corsOptions = {
@@ -43,7 +42,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 // ...existing code...
 dotenv.config();
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
 app.use('/api/services', serviceRoutes);
 app.use('/api/auth', authRoutes);
