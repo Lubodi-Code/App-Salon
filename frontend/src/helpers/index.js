@@ -1,3 +1,3 @@
 export const formatCurrency = (value) => {
-    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value)
+    return new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' }).format(value)
 }
