@@ -4,8 +4,11 @@ import InputField from '@/components/InputField.vue'
 import AuthApi from '@/api/AuthApi'
 import { inject } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '@/lib/axios'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const toast = inject('toast')
 
@@ -17,17 +20,15 @@ const initialValues = {
 async function onSubmit(values) {
   try {
     const { data } = await AuthApi.login(values)
+    // Store token and update axios authorization header
+    localStorage.setItem('AUTH_TOKEN', data.token)
+    api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
-
-    // Extrae y almacena el token en localStorage si está presente
-   
-      localStorage.setItem('AUTH_TOKEN', data.token)
-
-      router.push({ name: 'mis-reservaciones' })
-   
-
+    // Fetch authenticated user and store it
     const { data: user } = await AuthApi.auth()
-    
+    userStore.user = user
+    await userStore.getUserAppointments()
+
     if (user.admin) {
       router.push({ name: 'appointments-admin' })
     } else {

@@ -33,7 +33,6 @@ const createAppointment = async (req, res) => {
     return res.status(201).json({ msg: 'Cita creada exitosamente' });
     
   } catch (error) {
-    console.error('Error creating appointment:', error);
     return res.status(500).json({ msg: 'Error creating appointment' });
   }
 };
@@ -43,7 +42,6 @@ const createAppointment = async (req, res) => {
     const appointments = await Appointment.find();
     res.status(200).json(appointments);
   } catch (error) {
-    console.error('Error fetching appointments:', error);
     res.status(500).json({ msg: 'Error fetching appointments' });
   }
 };
@@ -84,7 +82,6 @@ const getAppointmentsById = async (req, res) => {
     res.status(200).json(appointment);
   }
   catch (error) {
-    console.error('Error fetching appointment:', error);
     res.status(500).json({ msg: 'Error fetching appointment' });
   }
 }
@@ -125,7 +122,6 @@ const getAppointmentsById = async (req, res) => {
     // Responder con éxito
     res.status(200).json({ msg: 'Cita actualizada exitosamente' });
   } catch (error) {
-    console.error('Error updating appointment:', error);
     res.status(500).json({ msg: 'Error updating appointment' });
   }
 };
@@ -149,7 +145,6 @@ const deleteAppointment = async (req, res) => {
 
     res.status(200).json({ msg: 'Cita eliminada exitosamente' });
   } catch (error) {
-    console.error('Error deleting appointment:', error);
     res.status(500).json({ msg: 'Error deleting appointment' });
   }
 };
@@ -189,7 +184,6 @@ const searchAppointments = async (req, res) => {
 
     res.status(200).json(appointments);
   } catch (error) {
-    console.error('Error searching appointments:', error);
     res.status(500).json({ msg: 'Error searching appointments' });
   }
 };

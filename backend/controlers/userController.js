@@ -7,10 +7,6 @@ const getUserAppointments = async (req, res) => {
   try {
     const userId = req.params.user;
 
-    console.log('----DEBUG INFO----');
-    console.log('Usuario autenticado:', req.user);
-    console.log('Es admin?:', req.user.admin);
-    console.log('userId solicitado:', userId);
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ msg: "El ID de usuario no es válido" });
@@ -40,14 +36,12 @@ const getUserAppointments = async (req, res) => {
       ]
     };
 
-    console.log('Filtro aplicado:', filter);
     
     const appointments = await Appointment.find(filter)
       .populate("services")
       .populate("user", "name email") // Agregamos populate de usuario para ver quién tiene la cita
       .sort({ date: 1, time: 1 });
     
-    console.log('Número de citas encontradas:', appointments.length);
          
     return res.status(200).json(appointments);
   } catch (error) {
