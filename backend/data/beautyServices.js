@@ -1,82 +1,82 @@
 export const services = [
-    { 
+    {
         name: 'Corte de cabello para hombres',
-        price: 100
+        price: 2500
     },
-    { 
+    {
         name: 'Corte de cabello para mujeres',
-        price: 120
+        price: 3000
     },
-    { 
+    {
         name: 'Corte de cabello para niños',
-        price: 90
+        price: 2250
     },
-    { 
+    {
         name: 'Corte de barba y bigote',
-        price: 100
+        price: 2500
     },
-    { 
+    {
         name: 'Afeitado clásico con navaja',
-        price: 100
+        price: 2500
     },
-    { 
+    {
         name: 'Coloración de cabello',
-        price: 200
+        price: 5000
     },
-    { 
+    {
         name: 'Reflejos y mechas',
-        price: 300
+        price: 7500
     },
-    { 
+    {
         name: 'Peinados para bodas y eventos especiales',
-        price: 400
+        price: 10000
     },
-    { 
+    {
         name: 'Tratamientos capilares para cabello dañado o quebradizo',
-        price: 100
+        price: 2500
     },
-    { 
+    {
         name: 'Masajes capilares para estimular el crecimiento del cabello',
-        price: 140
+        price: 3500
     },
-    { 
+    {
         name: 'Maquillaje para bodas y eventos especiales',
-        price: 300
+        price: 7500
     },
-    { 
+    {
         name: 'Manicura y pedicura',
-        price: 120
+        price: 3000
     },
-    { 
+    {
         name: 'Depilación con cera',
-        price: 120
+        price: 3000
     },
-    { 
+    {
         name: 'Tratamientos faciales para hombres y mujeres',
-        price: 130
+        price: 3250
     },
-    { 
+    {
         name: 'Tratamientos de exfoliación corporal',
-        price: 200
+        price: 5000
     },
-    { 
+    {
         name: 'Masajes relajantes para aliviar el estrés y la tensión muscular',
-        price: 250
+        price: 6250
     },
-    { 
+    {
         name: 'Extensiones de cabello',
-        price: 150
+        price: 3750
     },
-    { 
+    {
         name: 'Maquillaje de cejas y pestañas',
-        price: 100
+        price: 2500
     },
-    { 
+    {
         name: 'Tintura de cejas y pestañas',
-        price: 150
+        price: 3750
     },
-    { 
+    {
         name: 'Tratamientos de bronceado sin sol',
-        price: 250
+        price: 6250
     }
   ];
